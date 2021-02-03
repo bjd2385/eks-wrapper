@@ -2,7 +2,7 @@
 # Stand up a K8s cluster.
 
 
-source utils.sh
+source src/utils.sh
 
 
 # Install `brew install ossp-uuid` to get `uuid`.

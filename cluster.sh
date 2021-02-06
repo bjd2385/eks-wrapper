@@ -8,7 +8,9 @@ source src/eks.sh
 
 usage()
 {
-    printf "Usage: %s [-h help] [-c create a cluster] [-d dry creation run] [-D delete a cluster]\\n" "$0" >&2
+    printf "Usage: %s [-h help] [-c create a cluster] [-d dry run] [-D delete a cluster] \
+[-a add node group to existing cluster] [-r remove node group from existing cluster] \
+[-g get kubeconfig command] [-s show cluster and cluster nodegroups]\\n" "$0" >&2
     exit 1
 }
 
@@ -21,7 +23,7 @@ then
 fi
 
 
-while getopts ":h:dDc" flag
+while getopts ":h:dDcagrs" flag
 do
     case "${flag}" in
         d)
@@ -34,6 +36,18 @@ do
             ;;
         D)
             delete
+            ;;
+        a)
+            add_nodes
+            ;;
+        r)
+            remove_nodes
+            ;;
+        g)
+            get_kubeconfig
+            ;;
+        s)
+            show_cluster
             ;;
         h)
             # Help.

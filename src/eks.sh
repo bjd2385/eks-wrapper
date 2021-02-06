@@ -8,6 +8,7 @@ delete()
 
     if [ -z "$list" ]
     then
+        # Above command probably sent text to stderr we didn't capture.
         exit 1
     elif [[ "$list" =~ "No clusters found" ]]
     then
@@ -16,7 +17,6 @@ delete()
     else
         printf "%s\\n" "$list"
     fi
-
     CLUSTER="$(response "Select a cluster from the above list to delete: " "")"
 
     if [ "$CLUSTER" ]
@@ -40,10 +40,120 @@ _nodegroup_io()
     MAX="$(response "Max number of worker nodes (default is $MIN + 1 = $(( MIN + 1 ))): " "$(( MIN + 1 ))")"
     SIZE="$(response "Instance size (default is \`t3.medium\`): " "t3.medium")"
     EBS_SIZE="$(response "Instance volume size (default 80 (GB)): " "80")"
-    NODEGROUP_NAME="$(response "Nodegroup name (default \`test\`): " "test")"
+    NODEGROUP_NAME="$(response "Nodegroup name (default \`test\`, no duplicates): " "test")"
     LABELS="$(response "Nodegroup labels (default \`env=test\`; must be in format key1=val1,key2=val2): " "env=test")"
+    return 0
+}
 
-    # TODO: Add check/retry to ensure there are no duplicate nodegroup names.
+
+##
+# Add a nodegroup to a cluster.
+add_nodes()
+{
+    if [ $# -eq 1 ]
+    then
+        # This method is being called upon a cluster that was just created, so we already have the cluster info.
+        :
+    else
+        # We do not have the cluster info, so necessary variables are not set.
+        REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
+        list="$(eksctl get cluster --region "$REGION")"
+
+        if [ -z "$list" ]
+        then
+            exit 1
+        elif [[ "$list" =~ "No clusters found" ]]
+        then
+            _error "$list"
+            exit 1
+        else
+            printf "%s\\n" "$list"
+        fi
+
+        NAME="$(response "Select a cluster from the above list to add a node group to: " "")"
+
+        if ! [ "$NAME" ]
+        then
+            _error "Expected cluster name."
+        fi
+
+        OWNER="$(response "Your name (for tagging purposes, defaults to \`Support\`): " "Support")"
+    fi
+
+    # FIXME: same as below in `remove_nodes`, for clusters with no nodegroups.
+    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+    if [[ "$list" =~ "Error:" ]]
+    then
+        _warning "There are currently no nodegroups attached to this cluster"
+    else
+        printf "%s\\n" "$list"
+    fi
+
+    _nodegroup_io
+    _separator "Creating EKS Nodegroup"
+
+    eksctl create nodegroup --cluster "$NAME" --tags "\"Owner=$OWNER\"" --region "$REGION" \
+--timeout "60m0s" --name "$NODEGROUP_NAME" --node-type "$SIZE" --nodes-min "$MIN" \
+--nodes-max "$MAX" --node-volume-size "$EBS_SIZE" --node-labels "${LABELS}" --full-ecr-access \
+--asg-access --alb-ingress-access
+
+    printf "\\n"
+    eksctl get nodegroup --region "$REGION" --cluster "$NAME"
+    printf "\\n"
+
+    return 0
+}
+
+
+##
+# Remove node group from an existing cluster.
+remove_nodes()
+{
+    # We do not have the cluster info, so necessary variables are not set.
+    REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
+    list="$(eksctl get cluster --region "$REGION")"
+
+    if [ -z "$list" ]
+    then
+        exit 1
+    elif [[ "$list" =~ "No clusters found" ]]
+    then
+        _error "$list"
+        exit 1
+    else
+        printf "%s\\n" "$list"
+    fi
+
+    NAME="$(response "Select a cluster from the above list to remove a node group from: " "")"
+
+    if ! [ "$NAME" ]
+    then
+        _error "Expected cluster name."
+    fi
+
+    # FIXME: I think this is a bug in `eksctl`? If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
+    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+
+    if [ -z "$list" ]
+    then
+        # Above command probably sent text to stderr we didn't capture.
+        exit 1
+    elif [[ "$list" =~ "Error:" ]]
+    then
+        _error "$list"
+        exit 1
+    else
+        printf "%s\\n" "$list"
+    fi
+
+    NODEGROUP_NAME="$(response "Select a nodegroup (name) from the above list to remove from cluster $NAME: " "")"
+
+    _separator "Deleting nodegroup $NODEGROUP_NAME from cluster $NAME"
+
+    eksctl delete nodegroup --region "$REGION" --cluster "$NAME" --name "$NODEGROUP_NAME"
+    printf "\\n"
+
+    return 0
 }
 
 
@@ -53,8 +163,7 @@ create()
 {
     if [ $# -ne 1 ]
     then
-        printf "Expected 1 argument to \`create\`, received %s.\\n" "$#"
-        exit 1
+        _error "Expected 1 argument to \`create\`, received $#.\\n"
     fi
 
     _dry_run=$1
@@ -116,15 +225,86 @@ create()
         then
             # Yes, so reset nodegroup variables and run an additional command to append a nodegroup.
             _separator "Adding additional nodegroup to cluster $NAME"
-            _warning "Feature not yet available."
-            #_nodegroup_io
-            # TODO: finish adding additional node groups logic.
+            add_nodes "$NAME"
         else
             # No, let's just exit with some beautiful output :D
             :
             break
         fi
     done
+
+    _separator "Execute the following command to connect to your new cluster:"
+    printf "\$ sudo aws eks --region %s update-kubeconfig --name %s\\n\\n" "$REGION" "$NAME"
+
+    return 0
+}
+
+
+##
+# Dump command you need to execute as root to connect ot a cluster.
+get_kubeconfig()
+{
+    REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
+    list="$(eksctl get cluster --region "$REGION")"
+
+    if [ -z "$list" ]
+    then
+        exit 1
+    elif [[ "$list" =~ "No clusters found" ]]
+    then
+        _error "$list"
+        exit 1
+    else
+        printf "%s\\n" "$list"
+    fi
+
+    NAME="$(response "Select a cluster from the above list to generate \`update-kubeconfig\` command on: " "")"
+
+    if ! [ "$NAME" ]
+    then
+        _error "Expected cluster name."
+    fi
+
+    _separator "Execute the following command to connect to your new cluster:"
+    printf "\$ sudo aws eks --region %s update-kubeconfig --name %s\\n\\n" "$REGION" "$NAME"
+
+    return 0
+}
+
+
+##
+# Show information about a cluster.
+show_cluster()
+{
+    REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
+    list="$(eksctl get cluster --region "$REGION")"
+
+    if [ -z "$list" ]
+    then
+        exit 1
+    elif [[ "$list" =~ "No clusters found" ]]
+    then
+        _error "$list"
+        exit 1
+    else
+        printf "%s\\n" "$list"
+    fi
+
+    NAME="$(response "Select a cluster from the above list to show info: " "")"
+
+    if ! [ "$NAME" ]
+    then
+        _error "Expected cluster name."
+    fi
+
+    # FIXME: same as above problem where there are no nodegroups attached.
+    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+    if [[ "$list" =~ "Error:" ]]
+    then
+        _warning "There are currently no nodegroups attached to this cluster"
+    else
+        printf "\\n%s\\n\\n" "$list"
+    fi
 
     return 0
 }

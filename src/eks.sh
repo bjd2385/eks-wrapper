@@ -81,7 +81,8 @@ add_nodes()
         OWNER="$(response "Your name (for tagging purposes, defaults to \`Support\`): " "Support")"
     fi
 
-    # FIXME: same as below in `remove_nodes`, for clusters with no nodegroups.
+    # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
+    # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
     list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
     if [[ "$list" =~ "Error:" ]]
     then
@@ -132,7 +133,8 @@ remove_nodes()
         _error "Expected cluster name."
     fi
 
-    # FIXME: I think this is a bug in `eksctl`? If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
+    # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
+    # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
     list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
 
     if [ -z "$list" ]
@@ -296,7 +298,8 @@ show_cluster()
         _error "Expected cluster name."
     fi
 
-    # FIXME: same as above problem where there are no nodegroups attached.
+    # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
+    # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
     list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
     if [[ "$list" =~ "Error:" ]]
     then

@@ -2,6 +2,16 @@
 
 This changelog notes important changes with each minor release.
 
+### v0.3
+
+*02/07/2021*
+
+* Found that the problem with gathering node groups on clusters that don't currently have any was fixed in a later 
+  `eksctl` version than 0.31.0 (tested with v0.37.0, the latest). Will keep these fixes in-place, however, for those 
+  using an earlier `eksctl` version.
+* Fixed the portion about adding additional nodegroups following cluster creation. Was formerly broken. Now you may add as many nodegroups as you would like while building a cluster.
+* 
+
 ### v0.2
 
 *02/06/2021*

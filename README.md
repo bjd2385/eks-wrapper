@@ -40,7 +40,7 @@ eksctl create cluster --name brandon-test --tags "Owner=Brandon" --region us-eas
 
 #### Prerequisites
 
-This script requires `ossp-uuid` (Mac, or `uuid` on Linux), a working `eksctl` installation, and the AWS CLI. Refer to the [AWS
+This script is intended to be executed with `bash` and requires `ossp-uuid` (Mac, or `uuid` on Linux), a working `eksctl` installation (>= v0.31.0), and the AWS CLI. Refer to the [AWS
 docs](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) to install the latter utilities.
 
 #### Examples

@@ -31,7 +31,7 @@ do
             create true
             ;;
         c)
-            # Create a cluster.
+            # Create a cluster (w/o a dry run output).
             create false
             ;;
         D)

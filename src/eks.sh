@@ -72,10 +72,11 @@ add_nodes()
 
         NAME="$(response "Select a cluster from the above list to add a node group to: " "")"
 
-        if ! [ "$NAME" ]
-        then
+        while ! [ "$NAME" ]
+        do
             _error "Expected cluster name."
-        fi
+            NAME="$(response "Select a cluster from the above list to add a node group to: " "")"
+        done
 
         OWNER="$(response "Your name (for tagging purposes, defaults to \`Support\`): " "Support")"
     fi
@@ -226,11 +227,9 @@ create()
             # Yes, so reset nodegroup variables and run an additional command to append a nodegroup.
             _separator "Adding additional nodegroup to cluster $NAME"
             add_nodes "$NAME"
-        else
-            # No, let's just exit with some beautiful output :D
-            :
-            break
+            continue
         fi
+        break
     done
 
     _separator "Execute the following command to connect to your new cluster:"

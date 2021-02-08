@@ -4,7 +4,7 @@ delete()
 {
     # Delete a cluster.
     REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
-    list="$(eksctl get cluster --region "$REGION")"
+    list="$(eksctl --verbose 2 get cluster --region "$REGION")"
 
     if [ -z "$list" ]
     then
@@ -17,12 +17,13 @@ delete()
     else
         printf "%s\\n" "$list"
     fi
-    CLUSTER="$(response "Select a cluster from the above list to delete: " "")"
 
-    if [ "$CLUSTER" ]
+    NAME="$(response "Select a cluster from the above list to delete: " "")"
+
+    if [ "$NAME" ]
     then
-        _separator "Starting delete of cluster $CLUSTER"
-        eksctl delete cluster --region "$REGION" "$CLUSTER"
+        _separator "Starting delete of cluster $NAME"
+        eksctl delete cluster --region "$REGION" "$NAME"
         _wait 60
     else
         _error "Must provide a cluster name."
@@ -42,6 +43,7 @@ _nodegroup_io()
     EBS_SIZE="$(response "Instance volume size (default 80 (GB)): " "80")"
     NODEGROUP_NAME="$(response "Nodegroup name (default \`test\`, no duplicates): " "test")"
     LABELS="$(response "Nodegroup labels (default \`env=test\`; must be in format key1=val1,key2=val2): " "env=test")"
+
     return 0
 }
 
@@ -57,7 +59,7 @@ add_nodes()
     else
         # We do not have the cluster info, so necessary variables are not set.
         REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
-        list="$(eksctl get cluster --region "$REGION")"
+        list="$(eksctl --verbose 2 get cluster --region "$REGION")"
 
         if [ -z "$list" ]
         then
@@ -71,7 +73,6 @@ add_nodes()
         fi
 
         NAME="$(response "Select a cluster from the above list to add a node group to: " "")"
-
         while ! [ "$NAME" ]
         do
             _error "Expected cluster name."
@@ -83,7 +84,7 @@ add_nodes()
 
     # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
     # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
-    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+    list="$(eksctl --verbose 2 get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
     if [[ "$list" =~ "Error:" ]]
     then
         _warning "There are currently no nodegroups attached to this cluster"
@@ -100,7 +101,7 @@ add_nodes()
 --asg-access --alb-ingress-access
 
     printf "\\n"
-    eksctl get nodegroup --region "$REGION" --cluster "$NAME"
+    eksctl --verbose 2 get nodegroup --region "$REGION" --cluster "$NAME"
     printf "\\n"
 
     return 0
@@ -113,7 +114,7 @@ remove_nodes()
 {
     # We do not have the cluster info, so necessary variables are not set.
     REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
-    list="$(eksctl get cluster --region "$REGION")"
+    list="$(eksctl --verbose 2 get cluster --region "$REGION")"
 
     if [ -z "$list" ]
     then
@@ -127,7 +128,6 @@ remove_nodes()
     fi
 
     NAME="$(response "Select a cluster from the above list to remove a node group from: " "")"
-
     if ! [ "$NAME" ]
     then
         _error "Expected cluster name."
@@ -135,7 +135,7 @@ remove_nodes()
 
     # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
     # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
-    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+    list="$(eksctl --verbose 2 get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
 
     if [ -z "$list" ]
     then
@@ -229,9 +229,9 @@ create()
             # Yes, so reset nodegroup variables and run an additional command to append a nodegroup.
             _separator "Adding additional nodegroup to cluster $NAME"
             add_nodes "$NAME"
-            continue
+        else
+            break
         fi
-        break
     done
 
     _separator "Execute the following command to connect to your new cluster:"
@@ -246,7 +246,7 @@ create()
 get_kubeconfig()
 {
     REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
-    list="$(eksctl get cluster --region "$REGION")"
+    list="$(eksctl --verbose 2 get cluster --region "$REGION")"
 
     if [ -z "$list" ]
     then
@@ -278,7 +278,7 @@ get_kubeconfig()
 show_cluster()
 {
     REGION="$(response "Cluster region (defaults to \`us-east-2\`): " "us-east-2")"
-    list="$(eksctl get cluster --region "$REGION")"
+    list="$(eksctl --verbose 2 get cluster --region "$REGION")"
 
     if [ -z "$list" ]
     then
@@ -300,7 +300,7 @@ show_cluster()
 
     # This is a bug in `eksctl`. If no nodegroup exists, it prints "Error: Nodegroup with name  not found" to stderr
     # in earlier eksctl versions. Was fixed somewhere between v0.31.0 and v0.37.0.
-    list="$(eksctl get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
+    list="$(eksctl --verbose 2 get nodegroup --region "$REGION" --cluster "$NAME" 2>&1)"
     if [[ "$list" =~ "Error:" ]]
     then
         _warning "There are currently no nodegroups attached to this cluster"

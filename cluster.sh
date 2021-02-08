@@ -8,9 +8,9 @@ source src/eks.sh
 
 usage()
 {
-    printf "Usage: %s [-h help] [-c create a cluster] [-d dry run] [-D delete a cluster] \
-[-a add node group to existing cluster] [-r remove node group from existing cluster] \
-[-g get kubeconfig command] [-s show cluster and cluster nodegroups]\\n" "$0" >&2
+    printf "Usage: %s { -h help | -c create a cluster | -d dry run | -D delete a cluster \
+| -a add node group to existing cluster | -r remove node group from existing cluster \
+| -g get kubeconfig command | -s show cluster and cluster nodegroups }\\n" "$0" >&2
     exit 1
 }
 

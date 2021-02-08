@@ -4,7 +4,7 @@ _error()
 {
     if [ $# -ne 1 ]
     then
-        printf "Expected 1 argument to \`_error\`, received %s.\\n" "$#"
+        printf "Expected 1 argument to \`_error\`, received %s.\\n" "$#" >&2
         exit 1
     fi
 

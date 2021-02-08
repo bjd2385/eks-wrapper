@@ -5,7 +5,7 @@ $ ./cluster.sh -s
 Cluster region (defaults to `us-east-2`): 
 WARNING: Defaulting to us-east-2
 ERROR: No clusters found
-(base) TS-C02TT3DBG8WN:eks_helper brandondoyle$ ./cluster.sh -c
+$ ./cluster.sh -c
 Cluster name (optional): brandon-test
 Your name (for tagging purposes, defaults to `Support`): Brandon
 Override K8s version (defaults to 1.18): 

@@ -2,6 +2,14 @@
 
 This changelog notes important changes with each minor release.
 
+### v0.4
+
+*02/08/2021*
+
+* Resolved the fact that later versions of `eksctl` seem to add additional verbosity on versioning.
+* Fixed `Usage:` string to show that only one flag can be passed in at a time.
+* Minor code readability fixes.
+
 ### v0.3
 
 *02/07/2021*
@@ -10,7 +18,6 @@ This changelog notes important changes with each minor release.
   `eksctl` version than 0.31.0 (tested with v0.37.0, the latest). Will keep these fixes in-place, however, for those 
   using an earlier `eksctl` version.
 * Fixed the portion about adding additional nodegroups following cluster creation. Was formerly broken. Now you may add as many nodegroups as you would like while building a cluster.
-* 
 
 ### v0.2
 

@@ -4,7 +4,7 @@
 
 ```shell
 $ ./cluster.sh -h
-Usage: ./cluster.sh [-h help] [-c create a cluster] [-d dry run] [-D delete a cluster] [-a add node group to existing cluster] [-r remove node group from existing cluster] [-g get kubeconfig command] [-s show cluster and cluster nodegroups]
+Usage: ./cluster.sh { -h help | -c create a cluster | -d dry run | -D delete a cluster | -a add node group to existing cluster | -r remove node group from existing cluster | -g get kubeconfig command | -s show cluster and cluster nodegroups }
 ```
 
 This tool is meant to aid Support/SEs in creating and deleting (VERY simple) EKS clusters for testing purposes. Most flags are left to the defaults as of this release.

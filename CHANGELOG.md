@@ -2,6 +2,12 @@
 
 This changelog notes important changes with each minor release.
 
+### v0.4.1
+
+*02/08/2021*
+
+* Fixed synopsis in README.
+
 ### v0.4
 
 *02/08/2021*

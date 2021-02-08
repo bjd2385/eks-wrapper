@@ -52,3 +52,7 @@ Because output can be rather extensive, I've opted to link to various examples ~
 * [Deploying an application](examples/deploy_application.md)
 * [Removing a nodegroup](examples/remove_nodegroup.md)
 * [Deleting a cluster](examples/delete_cluster.md)
+
+#### Updates
+
+See the [Changelog](CHANGELOG.md) for fixes and updates by version.

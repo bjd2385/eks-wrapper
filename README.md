@@ -9,6 +9,8 @@ Usage: ./cluster.sh { -h help | -c create a cluster | -d dry run | -D delete a c
 
 This tool is meant to aid Support/SEs in creating and deleting (VERY simple) EKS clusters for testing purposes. Most flags are left to the defaults as of this release.
 
+> **WARNING:** do not put spaces, underscores (`_`) or periods (`.`) in any of these input fields (dashes `-` are okay, however). Chances are, it will end up costing you a lot of time before `eksctl` errors out.
+
 If you wish to add additional configuration options (cf. `eksctl -h`, or `eksctl create cluster -h` for further 
 information), you may pass a `-d` (dry run) flag to the script to dump the command to `stdout` for further 
 modification or review.
@@ -45,7 +47,7 @@ docs](https://docs.aws.amazon.com/eks/latest/userguide/eksctl.html) to install t
 
 #### Examples
 
-Because output can be rather extensive, I've opted to link to various examples ~
+Because output can be rather extensive, I've opted to link to various examples to take you through a cluster's lifecycle ~
 
 * [Creating a cluster](examples/create_cluster.md)
 * [Adding a nodegroup](examples/add_nodegroup.md)

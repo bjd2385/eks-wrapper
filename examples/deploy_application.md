@@ -49,7 +49,7 @@ threatstack-agent-crmcr                             1/1     Running   0         
 threatstack-agent-kubernetes-api-64c5ff7d48-4t6sd   1/1     Running   0          67s
 threatstack-agent-q7mjd                             1/1     Running   0          67s
 threatstack-agent-w7pjn                             1/1     Running   0          67s
-(base) TS-C02TT3DBG8WN:helm_try brandondoyle$ k exec -it threatstack-agent-bsqtj -n threatstack -- tsagent status
+# k exec -it threatstack-agent-bsqtj -n threatstack -- tsagent status
   UP Threat Stack Agent Daemon
   UP Threat Stack Backend Connection
   UP Threat Stack Docker Monitoring

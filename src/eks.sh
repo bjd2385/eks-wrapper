@@ -207,7 +207,7 @@ create()
             # This command blocks, but it doesn't exit when all resources are deleted, yet.
             eksctl delete cluster --region "$REGION" "$NAME"
 
-            _wait 90
+            _wait 60
 
             retry="$(response "Retry? [y/n]: ")"
             if [[ ! "$retry" =~ ^[Yy].* ]]
@@ -222,16 +222,11 @@ create()
     _separator "EKS Cluster $NAME created. Moving on to optional additional compute"
 
     # Cluster creation was successful. Want to add more node(s|groups)?
-    while true
+    while [[ "$(response "Would you like to add further nodegroups? [y/n]: " "no")" =~ ^[Yy].* ]]
     do
-        if [[ "$(response "Would you like to add further nodegroups? [y/n]: " "no")" =~ ^[Yy].* ]]
-        then
-            # Yes, so reset nodegroup variables and run an additional command to append a nodegroup.
-            _separator "Adding additional nodegroup to cluster $NAME"
-            add_nodes "$NAME"
-        else
-            break
-        fi
+        # Yes, so reset nodegroup variables and run an additional command to append a nodegroup.
+        _separator "Adding additional nodegroup to cluster $NAME"
+        add_nodes "$NAME"
     done
 
     _separator "Execute the following command to connect to your new cluster:"

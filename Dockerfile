@@ -1,2 +1,7 @@
-FROM aws-cli:2.2.26
+FROM ubuntu:20.04
 
+RUN mkdir /app
+WORKDIR /app
+COPY . .
+
+ENTRYPOINT ["cluster.sh"]

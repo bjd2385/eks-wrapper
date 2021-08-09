@@ -10,8 +10,7 @@ jobs:
   build-container:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        name: Get the latest tag for reference during build
+      - name: Get the latest tag for reference during build
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
         id: latest_tag
 

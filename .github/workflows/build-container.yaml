@@ -35,10 +35,10 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: website
+          #context:
           push: true
           # Set to same as DockerHub repository
-          tags: "${{ env.GITHUB_REPOSITORY }}:${{ steps.latest_tag.outputs.tag }}"
+          tags: "bjd2385/${{ env.GITHUB_REPOSITORY }}:${{ steps.latest_tag.outputs.tag }}"
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

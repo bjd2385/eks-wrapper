@@ -42,7 +42,4 @@ jobs:
           #context:
           push: true
           # Set to same as DockerHub repository
-          tags: ${{ steps.docker_image_tag.outputs.imagetag }}
-
-      - name: Image digest
-        run: echo ${{ steps.docker_build.outputs.digest }}
+          tags: bjd2385/${{ steps.docker_image_tag.outputs.imagetag }}

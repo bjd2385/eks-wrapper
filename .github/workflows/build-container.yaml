@@ -38,7 +38,7 @@ jobs:
           #context:
           push: true
           # Set to same as DockerHub repository
-          tags: "${{ GITHUB_REPOSITORY }}:${{ steps.latest_tag.outputs.tag }}"
+          tags: ${GITHUB_REPOSITORY#*\/}:${{ steps.latest_tag.outputs.tag }}
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

@@ -2,6 +2,12 @@
 
 This changelog notes important changes with each minor release.
 
+### v1.0.0
+
+*08/08/2021*
+
+* Added automations to generate releases and docker image builds.
+
 ### v0.4.1
 
 *02/08/2021*

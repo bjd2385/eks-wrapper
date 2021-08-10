@@ -4,4 +4,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY . .
 
-ENTRYPOINT ["cluster.sh"]
+ENTRYPOINT ["./cluster.sh"]

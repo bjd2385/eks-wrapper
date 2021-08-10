@@ -1,0 +1,5 @@
+.github/
+.circleci/
+examples/
+.gitignore
+CHANGELOG.md

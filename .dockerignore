@@ -2,4 +2,4 @@
 .circleci/
 examples/
 .gitignore
-CHANGELOG.md
+.pre-commit-config.yaml

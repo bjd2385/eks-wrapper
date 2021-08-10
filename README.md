@@ -1,5 +1,7 @@
 ### EKS CLI wrapper
 
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
 #### Synopsis
 
 ```shell
@@ -11,26 +13,26 @@ This tool is meant to aid Support/SEs in creating and deleting (VERY simple) EKS
 
 > **WARNING:** do not put spaces, underscores (`_`) or periods (`.`) in any of these input fields (dashes `-` are okay, however). Chances are, it will end up costing you a lot of time before `eksctl` errors out.
 
-If you wish to add additional configuration options (cf. `eksctl -h`, or `eksctl create cluster -h` for further 
-information), you may pass a `-d` (dry run) flag to the script to dump the command to `stdout` for further 
+If you wish to add additional configuration options (cf. `eksctl -h`, or `eksctl create cluster -h` for further
+information), you may pass a `-d` (dry run) flag to the script to dump the command to `stdout` for further
 modification or review.
 ```shell
 $ ./cluster.sh -d
 Cluster name (optional): brandon-test
 Your name (for tagging purposes, defaults to `Support`): Brandon
-Override K8s version (defaults to 1.18): 
+Override K8s version (defaults to 1.18):
 WARNING: Defaulting to 1.18
-Cluster region (default `us-east-2`): 
+Cluster region (default `us-east-2`):
 WARNING: Defaulting to us-east-2
-Min number of worker nodes (default is 2): 
+Min number of worker nodes (default is 2):
 WARNING: Defaulting to 2
-Max number of worker nodes (default is 2 + 1 = 3): 
+Max number of worker nodes (default is 2 + 1 = 3):
 WARNING: Defaulting to 3
-Instance size (default is `t3.medium`): 
+Instance size (default is `t3.medium`):
 WARNING: Defaulting to t3.medium
-Instance volume size (default 80 (GB)): 
+Instance volume size (default 80 (GB)):
 WARNING: Defaulting to 80
-Nodegroup name (default `test`, no duplicates): 
+Nodegroup name (default `test`, no duplicates):
 WARNING: Defaulting to test
 Nodegroup labels (default `env=test`; must be in format key1=val1,key2=val2): env=test,agent=2-3-1
 

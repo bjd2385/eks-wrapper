@@ -2,7 +2,7 @@
 
 ```shell
 $ ./cluster.sh -g
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 NAME		REGION
 brandon-test	us-east-2
@@ -16,7 +16,7 @@ $ sudo aws eks --region us-east-2 update-kubeconfig --name brandon-test
 Password:
 Updated context arn:aws:eks:us-east-2:317200895319:cluster/brandon-test in /Users/brandondoyle/.kube/config
 ...
-# k create -f ns.yaml 
+# k create -f ns.yaml
 namespace/monitoring created
 namespace/threatstack created
 (base) TS-C02TT3DBG8WN:helm_try brandondoyle$ tf apply -auto-approve

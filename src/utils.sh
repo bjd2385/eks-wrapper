@@ -1,3 +1,5 @@
+#! /bin/bash
+
 ##
 # Print an error message to stderr.
 _error()

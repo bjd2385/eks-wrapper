@@ -2,7 +2,7 @@
 
 ```shell
 $ ./cluster.sh -r
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 NAME		REGION
 brandon-test	us-east-2
@@ -10,7 +10,7 @@ Select a cluster from the above list to remove a node group from: brandon-test
 CLUSTER		NODEGROUP	STATUS		CREATED			MIN SIZE	MAX SIZE	DESIRED CAPACITY	INSTANCE TYPE	IMAGE ID
 brandon-test	test		CREATE_COMPLETE	2021-02-06T09:47:04Z	2		3		0			t3.medium	ami-0b9bf042ba04abfa6
 brandon-test	test2		CREATE_COMPLETE	2021-02-06T09:56:16Z	2		3		0			t3.medium	ami-0b9bf042ba04abfa6
-Select a nodegroup (name) from the above list to remove from cluster brandon-test: test2 
+Select a nodegroup (name) from the above list to remove from cluster brandon-test: test2
 
 Deleting nodegroup test2 from cluster brandon-test
 
@@ -50,7 +50,7 @@ Deleting nodegroup test2 from cluster brandon-test
 [✔]  deleted 1 nodegroup(s) from cluster "brandon-test"
 
 $ ./cluster.sh -r
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 NAME		REGION
 brandon-test	us-east-2

@@ -2,7 +2,7 @@
 
 ```shell
 $ ./cluster.sh -a
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 NAME		REGION
 brandon-test	us-east-2
@@ -10,16 +10,16 @@ Select a cluster from the above list to add a node group to: brandon-test
 Your name (for tagging purposes, defaults to `Support`): Brandon
 CLUSTER		NODEGROUP	STATUS		CREATED			MIN SIZE	MAX SIZE	DESIRED CAPACITY	INSTANCE TYPE	IMAGE ID
 brandon-test	test		CREATE_COMPLETE	2021-02-06T09:47:04Z	2		3		0			t3.medium	ami-0b9bf042ba04abfa6
-Min number of worker nodes (default is 2): 
+Min number of worker nodes (default is 2):
 WARNING: Defaulting to 2
-Max number of worker nodes (default is 2 + 1 = 3): 
+Max number of worker nodes (default is 2 + 1 = 3):
 WARNING: Defaulting to 3
-Instance size (default is `t3.medium`): 
+Instance size (default is `t3.medium`):
 WARNING: Defaulting to t3.medium
-Instance volume size (default 80 (GB)): 
+Instance volume size (default 80 (GB)):
 WARNING: Defaulting to 80
 Nodegroup name (default `test`): test2
-Nodegroup labels (default `env=test`; must be in format key1=val1,key2=val2): 
+Nodegroup labels (default `env=test`; must be in format key1=val1,key2=val2):
 WARNING: Defaulting to env=test
 
 Creating EKS Nodegroup

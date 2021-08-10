@@ -2,25 +2,25 @@
 
 ```shell
 $ ./cluster.sh -s
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 ERROR: No clusters found
 $ ./cluster.sh -c
 Cluster name (optional): brandon-test
 Your name (for tagging purposes, defaults to `Support`): Brandon
-Override K8s version (defaults to 1.18): 
+Override K8s version (defaults to 1.18):
 WARNING: Defaulting to 1.18
-Cluster region (default `us-east-2`): 
+Cluster region (default `us-east-2`):
 WARNING: Defaulting to us-east-2
-Min number of worker nodes (default is 2): 
+Min number of worker nodes (default is 2):
 WARNING: Defaulting to 2
-Max number of worker nodes (default is 2 + 1 = 3): 
+Max number of worker nodes (default is 2 + 1 = 3):
 WARNING: Defaulting to 3
-Instance size (default is `t3.medium`): 
+Instance size (default is `t3.medium`):
 WARNING: Defaulting to t3.medium
-Instance volume size (default 80 (GB)): 
+Instance volume size (default 80 (GB)):
 WARNING: Defaulting to 80
-Nodegroup name (default `test`): 
+Nodegroup name (default `test`):
 WARNING: Defaulting to test
 Nodegroup labels (default `env=test`; must be in format key1=val1,key2=val2): env=test,agent=2-3-1
 

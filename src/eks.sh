@@ -1,3 +1,5 @@
+#! /bin/bash
+
 ##
 # Delete a cluster from a menu.
 delete()

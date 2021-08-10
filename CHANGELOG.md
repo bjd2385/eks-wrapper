@@ -26,8 +26,8 @@ This changelog notes important changes with each minor release.
 
 *02/07/2021*
 
-* Found that the problem with gathering node groups on clusters that don't currently have any was fixed in a later 
-  `eksctl` version than 0.31.0 (tested with v0.37.0, the latest). Will keep these fixes in-place, however, for those 
+* Found that the problem with gathering node groups on clusters that don't currently have any was fixed in a later
+  `eksctl` version than 0.31.0 (tested with v0.37.0, the latest). Will keep these fixes in-place, however, for those
   using an earlier `eksctl` version.
 * Fixed the portion about adding additional nodegroups following cluster creation. Was formerly broken. Now you may add as many nodegroups as you would like while building a cluster.
 
@@ -39,7 +39,7 @@ This changelog notes important changes with each minor release.
 * Dump the AWS CLI `update-kubeconfig` command to connect to your cluster (must be ran as root).
 * Show cluster details, including attached nodegroups.
 * Various fixes to make the interface more user-friendly.
-  
+
 #### TODOs following this release:
 * Identified a problem with gathering node groups on clusters that don't currently have any (cf. `FIXME`s in `eks.sh`). This could be fixed in a later version of `eksctl`, however. I am testing with `v0.31.0`.
 * I need to fix the portion about adding additional nodegroups following cluster creation; currently broken.

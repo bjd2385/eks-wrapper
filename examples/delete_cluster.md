@@ -2,7 +2,7 @@
 
 ```shell
 $ ./cluster.sh -D
-Cluster region (defaults to `us-east-2`): 
+Cluster region (defaults to `us-east-2`):
 WARNING: Defaulting to us-east-2
 NAME		REGION
 brandon-test	us-east-2

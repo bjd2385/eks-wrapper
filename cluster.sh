@@ -17,9 +17,15 @@ usage()
 
 if [ $# -ne 1 ]
 then
-    printf "Expected 1 argument to $0, received %s.\\n" "$#" >&2
+    printf "Expected 1 argument to $0, received %s.\\n\\n" "$#" >&2
     usage
     exit 1
+fi
+
+
+if ! hash eksctl
+then
+    _error "'eksctl' is not installed, exiting."
 fi
 
 

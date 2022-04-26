@@ -176,7 +176,7 @@ create()
     # Cluster
     NAME="$(response "Cluster name (optional): " "support-test-$(uuid)")"
     OWNER="$(response "Your name (for tagging purposes, defaults to \`Support\`): " "Support")"
-    VERSION="$(response "Override K8s version (defaults to 1.18): " "1.18")"
+    VERSION="$(response "Override K8s version (defaults to 1.21): " "1.21")"
     REGION="$(response "Cluster region (default \`us-east-2\`): " "us-east-2")"
 
     # Set nodegroup variables prior to creating a cluster for the first time.
